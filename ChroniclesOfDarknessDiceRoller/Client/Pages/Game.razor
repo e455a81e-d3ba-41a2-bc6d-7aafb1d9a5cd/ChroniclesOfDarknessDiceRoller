@@ -82,7 +82,6 @@
         hubConnection.On<List<RollResult>>(SignalRMethods.ReceiveHistory, (message) =>
         {
             rollResults = message;
-            ToastService.ShowToast("History received", ToastLevel.Info);
             StateHasChanged();
         });
 
