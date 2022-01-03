@@ -1,0 +1,141 @@
+﻿@page "/game/{gameName}"
+@using ChroniclesOfDarknessDiceRoller.Shared
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<h3>@GameName</h3>
+
+<form @onsubmit=RollDiceAsync>
+    <div class="mb-3">
+        <label class="form-label">
+            Player:
+            <input @bind="player" type="text" class="form-control" />
+        </label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Dice amount:
+            <input @bind="amount" type="number" class="form-control" />
+        </label>
+    </div>
+    <div class="mb-3">
+        @foreach (var choice in RerollTypeChoices)
+        {
+            <div class="form-check">
+                <label class="form-label">
+                    <input name="rerolltype-radio" type="radio"
+                       value="@choice"
+                       checked="@(SelectedRerollType == choice.Type)"
+                       @onchange="@(() => { SelectedRerollType = choice.Type; })" />
+                    @choice.Text.ToString()
+                </label>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Roll</button>
+    <button type="button" class="btn btn-danger" @onclick="RollChanceDiceAsync">Chance Die</button>
+</form>
+
+<hr>
+<div>
+    @foreach (var roll in Enumerable.Reverse(rollResults))
+    {
+        <ChroniclesOfDarknessDiceRoller.Client.Components.RollResultCard RollResult="roll">
+        </ChroniclesOfDarknessDiceRoller.Client.Components.RollResultCard>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string GameName { get; set; }
+
+    private HubConnection? hubConnection;
+    private List<RollResult> rollResults = new List<RollResult>();
+    private string? player;
+    private int? amount;
+    private RerollType SelectedRerollType = RerollType.TenAgain;
+
+    private List<RerollTypeChoice> RerollTypeChoices = new()
+        {
+            new RerollTypeChoice(RerollType.TenAgain, "Ten again."),
+            new RerollTypeChoice(RerollType.NineAgain, "Nine again."),
+            new RerollTypeChoice(RerollType.EightAgain, "Eight again."),
+        };
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/api/dicerollerhub"))
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<RollResult>("ReceiveDiceRoll", (message) =>
+        {
+            rollResults.Add(message);
+            StateHasChanged();
+        });
+
+        hubConnection.On<List<RollResult>>("ReceiveHistory", (message) =>
+        {
+            rollResults = message;
+            StateHasChanged();
+        });
+
+        hubConnection.Reconnected += _ => JoinGameAsync();
+
+        await hubConnection.StartAsync();
+        await JoinGameAsync();
+
+    }
+
+    private async Task JoinGameAsync()
+    {
+        if (hubConnection is not null) {
+            await hubConnection.SendAsync("JoinGame", GameName);
+        }
+    }
+
+    private async Task RollDiceAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("RollDice", GameName, player, amount, SelectedRerollType);
+        }
+    }
+
+    private async Task RollChanceDiceAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("RollDice", GameName, player, 1, RerollType.NoTenAgain);
+        }
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+
+    private string RollToString(RollResult rollResult)
+    {
+        return string.Join(", ",
+            rollResult.Rolls.Select(t =>
+            {
+                if (t.RerollsResults != null && t.RerollsResults.Any())
+                {
+                    return $"{t.Result}({string.Join(", ", t.RerollsResults) })";
+                }
+                return t.Result.ToString();
+            })
+        );
+    }
+
+    private record RerollTypeChoice(RerollType Type, string Text);
+}

@@ -1,0 +1,39 @@
+﻿@using ChroniclesOfDarknessDiceRoller.Shared
+
+<div class="card mb-2">
+    <div class="card-body">
+        <h5 class="card-title">@RollResult.Player</h5>
+        <h6 class="card-subtitle mb-2">Successes: @CountSuccesses()</h6>
+
+        <div class="row row-cols-auto">
+            @foreach (var roll in RollResult.Rolls)
+            {
+
+                <div class="col">
+                    <Die Result=roll.Result IsReRoll=false></Die>
+                </div>
+                @foreach (var reroll in roll?.RerollsResults)
+                {
+                    <div class="col">
+                        <Die Result=reroll IsReRoll=true></Die>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public RollResult RollResult { get; set; }
+
+
+    private int CountSuccesses()
+    {
+        return RollResult.Rolls
+            .SelectMany(t => t.RerollsResults.Append(t.Result))
+            .Count(t => t >= 8);
+    }
+
+}

@@ -1,0 +1,22 @@
+﻿div.card {
+    height: 3.5rem;
+    width: 3.5rem;
+}
+
+div.card[data-success="True"] {
+    background-color: forestgreen;
+    color: white;
+}
+
+div.card[data-success="False"] {
+    background-color: white;
+    color: darkgrey;
+}
+
+div.card[data-reroll="True"] {
+    border-radius: 100%;
+}
+
+.result {
+    min-width: 2rem;
+}

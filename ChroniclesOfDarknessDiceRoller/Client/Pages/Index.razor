@@ -1,0 +1,26 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+<h3>JoinGame</h3>
+
+<form @onsubmit="OpenGame">
+    <div class="mb-3">
+        <label class="form-label">
+            GameName:
+            <input @bind="gameName" type="text" class="form-control"/>
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Join Game</button>
+</form>
+
+@code {
+    private string? gameName;
+
+    private void OpenGame()
+    {
+        if (!string.IsNullOrWhiteSpace(gameName))
+        {
+            NavigationManager.NavigateTo($"game/{gameName}");
+        }
+    }
+}

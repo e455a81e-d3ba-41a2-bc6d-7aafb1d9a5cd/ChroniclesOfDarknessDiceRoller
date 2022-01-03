@@ -1,0 +1,32 @@
+﻿<Tooltip Text="@TooltipText()">
+<div class="card mb-2" data-success="@IsSuccess().ToString()" data-reroll="@IsReRoll.ToString()">
+    <div class="card-body mx-auto">
+        <span class="result">@Result</span>
+    </div>
+</div>
+</Tooltip>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public int Result { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public bool IsReRoll { get; set; }
+
+    private string TooltipText()
+    {
+        return IsReRoll ? "Reroll." : string.Empty;
+    }
+
+    private bool IsSuccess()
+    {
+        if (Result >= 8)
+        {
+            return true;
+        };
+
+        return false;
+    }
+}
