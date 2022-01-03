@@ -1,7 +1,11 @@
 ﻿@page "/game/{gameName}"
+@using ChroniclesOfDarknessDiceRoller.Client.Services
 @using ChroniclesOfDarknessDiceRoller.Shared
+@using ChroniclesOfDarknessDiceRoller.Shared.Constants
+@using ChroniclesOfDarknessDiceRoller.Client.Components;
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
+@inject ToastService ToastService
 @implements IAsyncDisposable
 
 <h3>@GameName</h3>
@@ -10,13 +14,13 @@
     <div class="mb-3">
         <label class="form-label">
             Player:
-            <input @bind="player" type="text" class="form-control" />
+            <input @bind="player" type="text" required class="form-control" />
         </label>
     </div>
     <div class="mb-3">
         <label class="form-label">
             Dice amount:
-            <input @bind="amount" type="number" class="form-control" />
+            <input @bind="amount" type="number" max="30" class="form-control" />
         </label>
     </div>
     <div class="mb-3">
@@ -41,8 +45,7 @@
 <div>
     @foreach (var roll in Enumerable.Reverse(rollResults))
     {
-        <ChroniclesOfDarknessDiceRoller.Client.Components.RollResultCard RollResult="roll">
-        </ChroniclesOfDarknessDiceRoller.Client.Components.RollResultCard>
+        <RollResultCard RollResult="roll" /> 
     }
 </div>
 
@@ -70,15 +73,22 @@
             .WithAutomaticReconnect()
             .Build();
 
-        hubConnection.On<RollResult>("ReceiveDiceRoll", (message) =>
+        hubConnection.On<RollResult>(SignalRMethods.ReceiveDiceRoll, (message) =>
         {
             rollResults.Add(message);
             StateHasChanged();
         });
 
-        hubConnection.On<List<RollResult>>("ReceiveHistory", (message) =>
+        hubConnection.On<List<RollResult>>(SignalRMethods.ReceiveHistory, (message) =>
         {
             rollResults = message;
+            ToastService.ShowToast("History received", ToastLevel.Info);
+            StateHasChanged();
+        });
+
+        hubConnection.On<string>(SignalRMethods.ReceiveError, (message) =>
+        {
+            ToastService.ShowToast(message, ToastLevel.Error);
             StateHasChanged();
         });
 
