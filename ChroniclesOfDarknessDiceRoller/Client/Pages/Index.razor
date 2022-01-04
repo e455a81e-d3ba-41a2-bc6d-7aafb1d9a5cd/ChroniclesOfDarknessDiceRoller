@@ -1,17 +1,16 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
+@using ChroniclesOfDarknessDiceRoller.Client.Components;
 
-<h3>JoinGame</h3>
-
-<form @onsubmit="OpenGame">
-    <div class="mb-3">
-        <label class="form-label">
-            GameName:
-            <input @bind="gameName" type="text" class="form-control"/>
-        </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Join Game</button>
-</form>
+<Card Title="JoinGame">
+    <form @onsubmit="OpenGame">
+        <div class="form-row">
+            <label for="game-name">GameName:</label>
+            <input id="game-name" class="input" type="text" @bind="gameName" />
+        </div>
+        <button class="button" type="submit">Join Game</button>
+    </form>
+</Card>
 
 @code {
     private string? gameName;

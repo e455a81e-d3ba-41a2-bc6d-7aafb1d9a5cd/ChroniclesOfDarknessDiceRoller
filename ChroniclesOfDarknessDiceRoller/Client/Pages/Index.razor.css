@@ -1,0 +1,23 @@
+﻿form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+input {
+    flex: 1;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+@media (max-width: 576px) 
+{
+    form {
+        flex-direction: column;
+        align-items: normal;
+    }
+
+}

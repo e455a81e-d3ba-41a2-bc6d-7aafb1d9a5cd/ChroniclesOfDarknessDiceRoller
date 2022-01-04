@@ -1,0 +1,16 @@
+﻿.card {
+    display: flex;
+    background-color: var(--white);
+    background-clip: border-box;
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius);
+}
+
+.card-content {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.card-title{
+    margin-bottom: .75rem;
+}

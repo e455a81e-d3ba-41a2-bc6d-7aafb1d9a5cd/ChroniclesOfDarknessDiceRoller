@@ -1,0 +1,11 @@
+﻿.input {
+    color: var(--dark);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.input:focus {
+    outline: 0;
+    border-color: var(--gray);
+    box-shadow: 0 0 0 .2rem var(--input-focus-color);
+}
