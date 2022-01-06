@@ -4,6 +4,8 @@
     background-clip: border-box;
     border: 1px solid var(--gray);
     border-radius: var(--border-radius);
+    max-width: 100vw;
+    flex-wrap: wrap;
 }
 
 .card-content {

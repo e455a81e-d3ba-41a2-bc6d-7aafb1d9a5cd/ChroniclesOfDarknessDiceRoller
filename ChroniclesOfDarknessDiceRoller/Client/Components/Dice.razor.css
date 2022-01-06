@@ -1,6 +1,9 @@
 ﻿div.card {
     height: 3.5rem;
     width: 3.5rem;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
 }
 
 div.card[data-success="True"] {

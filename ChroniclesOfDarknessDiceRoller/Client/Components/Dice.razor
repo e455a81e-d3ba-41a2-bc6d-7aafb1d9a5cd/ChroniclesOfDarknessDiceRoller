@@ -1,8 +1,6 @@
 ﻿<Tooltip Text="@TooltipText()">
-<div class="card mb-2" data-success="@IsSuccess().ToString()" data-reroll="@IsReRoll.ToString()">
-    <div class="card-body mx-auto">
-        <span class="result">@Result</span>
-    </div>
+<div class="card" data-success="@IsSuccess().ToString()" data-reroll="@IsReRoll.ToString()">
+    <span class="result">@Result</span>
 </div>
 </Tooltip>
 

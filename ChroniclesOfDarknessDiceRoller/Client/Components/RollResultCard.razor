@@ -1,21 +1,21 @@
 ﻿@using ChroniclesOfDarknessDiceRoller.Shared
 
-<div class="card mb-2">
-    <div class="card-body">
-        <h5 class="card-title">@RollResult.Player</h5>
-        <h6 class="card-subtitle mb-2">Successes: @CountSuccesses()</h6>
+<div>
+    <div>
+        <h5>@RollResult.Player</h5>
+        <h6>Successes: @CountSuccesses()</h6>
 
-        <div class="row row-cols-auto">
+        <div class="dice-container">
             @foreach (var roll in RollResult.Rolls)
             {
 
-                <div class="col">
-                    <Die Result=roll.Result IsReRoll=false></Die>
+                <div class="dice-wrapper">
+                    <Dice Result=roll.Result IsReRoll=false></Dice>
                 </div>
                 @foreach (var reroll in roll?.RerollsResults)
                 {
-                    <div class="col">
-                        <Die Result=reroll IsReRoll=true></Die>
+                    <div class="dice-wrapper">
+                        <Dice Result=reroll IsReRoll=true></Dice>
                     </div>
                 }
             }

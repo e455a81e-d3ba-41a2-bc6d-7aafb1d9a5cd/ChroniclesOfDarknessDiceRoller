@@ -8,45 +8,46 @@
 @inject ToastService ToastService
 @implements IAsyncDisposable
 
-<h3>@GameName</h3>
-
-<form @onsubmit=RollDiceAsync>
-    <div class="mb-3">
-        <label class="form-label">
-            Player:
-            <input @bind="player" type="text" required class="form-control" />
-        </label>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">
-            Dice amount:
-            <input @bind="amount" type="number" max="30" class="form-control" />
-        </label>
-    </div>
-    <div class="mb-3">
-        @foreach (var choice in RerollTypeChoices)
-        {
-            <div class="form-check">
-                <label class="form-label">
-                    <input name="rerolltype-radio" type="radio"
-                       value="@choice"
-                       checked="@(SelectedRerollType == choice.Type)"
-                       @onchange="@(() => { SelectedRerollType = choice.Type; })" />
-                    @choice.Text.ToString()
-                </label>
+<div class="layout">
+    <Card Title="@GameName">
+        <form @onsubmit=RollDiceAsync>
+            <div class="form-group">
+                <label for="player-name">Player</label>
+                <input id="player-name" @bind="player" type="text" required class="input" />
             </div>
-        }
-    </div>
-    <button type="submit" class="btn btn-primary">Roll</button>
-    <button type="button" class="btn btn-danger" @onclick="RollChanceDiceAsync">Chance Die</button>
-</form>
+            <div class="form-group">
+                <label for="dice-amount">Dice amount</label>
+                <input id="dice-amount" @bind="amount" type="number" max="30" min="1" class="input" />
+            </div>
+            <div class="form-group">
+                @foreach (var choice in RerollTypeChoices)
+                {
+                    <div class="form-check">
+                        <label id=@($"radio-{choice.Type}") class="form-label"> @choice.Text.ToString() </label>
+                        <input id=@($"radio-{choice.Type}") name="rerolltype-radio" type="radio"
+                           value="@choice"
+                           checked="@(SelectedRerollType == choice.Type)"
+                           @onchange="@(() => { SelectedRerollType = choice.Type; })" />
+                    </div>
+                }
+            </div>
+            <button class="button" type="submit">Roll</button>
+            <button class="button" type="button" @onclick="RollChanceDiceAsync">Chance Die</button>
+        </form>
+    </Card>
 
-<hr>
-<div>
-    @foreach (var roll in Enumerable.Reverse(rollResults))
+    @if (rollResults.Any())
     {
-        <RollResultCard RollResult="roll" /> 
+        <Card>
+            @foreach (var roll in Enumerable.Reverse(rollResults))
+            {
+                <div class="roll-result">
+                    <RollResultCard RollResult="roll" />
+                </div>
+            }
+        </Card>
     }
+
 </div>
 
 @code {
@@ -100,7 +101,8 @@
 
     private async Task JoinGameAsync()
     {
-        if (hubConnection is not null) {
+        if (hubConnection is not null)
+        {
             await hubConnection.SendAsync("JoinGame", GameName);
         }
     }
