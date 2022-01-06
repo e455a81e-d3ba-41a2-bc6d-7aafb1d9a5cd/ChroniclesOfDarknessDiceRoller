@@ -1,0 +1,11 @@
+﻿.layout {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75vw;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    width: 100%;
+}

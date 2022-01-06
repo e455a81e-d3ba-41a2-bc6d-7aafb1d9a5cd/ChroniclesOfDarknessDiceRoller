@@ -1,0 +1,11 @@
+﻿.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.roll-result {
+    background-color: var(--light);
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
