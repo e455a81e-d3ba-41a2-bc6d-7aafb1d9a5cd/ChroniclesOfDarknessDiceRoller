@@ -50,7 +50,7 @@ namespace ChroniclesOfDarknessDiceRoller.Server.Hubs
                 await Clients.Client(Context.ConnectionId).SendAsync(SignalRMethods.ReceiveError, $"You must join a game before you start rolling dice.");
                 return;
             }
-            if (amount > DiceRollerConstants.DiceLimit)
+            if (amount > DiceRollerConstants.DiceLimit || amount <= 0)
             {
                 await Clients.Client(Context.ConnectionId).SendAsync(SignalRMethods.ReceiveError, $"You are not allowed to roll more than {DiceRollerConstants.DiceLimit} dice.");
                 return;
