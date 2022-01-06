@@ -5,16 +5,16 @@
     width: 100%;
 }
 
-.input:focus {
-    outline: 0;
-    border-color: var(--gray);
-    box-shadow: 0 0 0 .2rem var(--input-focus-color);
-}
+    .input:focus {
+        outline: 0;
+        border-color: var(--gray);
+        box-shadow: 0 0 0 .2rem var(--input-focus-color);
+    }
 
 .form-group label {
     font-size: .75rem;
 }
 
-.form-group{
+.form-group {
     margin-bottom: 1rem;
 }

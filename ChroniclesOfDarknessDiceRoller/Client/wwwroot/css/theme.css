@@ -16,7 +16,6 @@
     --light-gray: #ced4da;
     --gray: #6c757d;
     --gray-dark: #343a40;
-
     --primary: #007bff;
     --secondary: #6c757d;
     --success: #28a745;
@@ -25,15 +24,12 @@
     --danger: #dc3545;
     --light: #f8f9fa;
     --dark: #343a40;
-
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-
     --border-radius: .25rem;
-
     --input-focus-color: #6c757d44;
 }
 
