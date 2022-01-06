@@ -5,7 +5,18 @@
     border: 1px solid;
     border-radius: var(--border-radius);
     white-space: nowrap;
+    padding: .5rem 1rem;
 }
 
 .button:hover {
+}
+
+.primary-button {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.danger-button {
+    background-color: var(--danger);
+    color: var(--white);
 }
