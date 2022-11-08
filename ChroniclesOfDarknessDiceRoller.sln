@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChroniclesOfDarknessDiceRoller.Server", "ChroniclesOfDarknessDiceRoller\Server\ChroniclesOfDarknessDiceRoller.Server.csproj", "{ADA73251-719E-47B5-8AD9-736DA110FED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChroniclesOfDarknessDiceRoller.Server", "ChroniclesOfDarknessDiceRoller\Server\ChroniclesOfDarknessDiceRoller.Server.csproj", "{ADA73251-719E-47B5-8AD9-736DA110FED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChroniclesOfDarknessDiceRoller.Client", "ChroniclesOfDarknessDiceRoller\Client\ChroniclesOfDarknessDiceRoller.Client.csproj", "{48A5BE8A-897D-4832-8446-0CD4BC369386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChroniclesOfDarknessDiceRoller.Client", "ChroniclesOfDarknessDiceRoller\Client\ChroniclesOfDarknessDiceRoller.Client.csproj", "{48A5BE8A-897D-4832-8446-0CD4BC369386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChroniclesOfDarknessDiceRoller.Shared", "ChroniclesOfDarknessDiceRoller\Shared\ChroniclesOfDarknessDiceRoller.Shared.csproj", "{0668CA92-0868-4EDF-B4B6-1EF616954751}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChroniclesOfDarknessDiceRoller.Shared", "ChroniclesOfDarknessDiceRoller\Shared\ChroniclesOfDarknessDiceRoller.Shared.csproj", "{0668CA92-0868-4EDF-B4B6-1EF616954751}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{07FE06AF-D86C-4B66-943B-D88A03FA6B60}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,6 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".git", ".git", "{3ABCE233-E
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F755A01A-1BEA-47B7-A45C-1CF00549C4E9}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
